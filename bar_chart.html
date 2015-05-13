@@ -1,0 +1,60 @@
+<html>
+    <body>
+          <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <div id="chart_div"></div>
+  
+  <script>
+      google.load('visualization', '1', {packages: ['corechart', 'bar']});
+google.setOnLoadCallback(drawStacked);
+
+function drawStacked() {
+      var data = google.visualization.arrayToDataTable([
+        ['Time(mins)', '2010 Population'],
+        ['1-5', 8175000],
+        ['6-10', 3792000],
+        ['11-15', 2695000]
+        
+        
+      ]);
+
+      var options = {
+        title: 'Population of Largest U.S. Cities',
+        'width': '100%',
+        
+        'fontSize': 14,
+        'chartArea': {top: 0, right: 0, bottom: 0, height:'95%', width:'70%'},
+        isStacked: true,
+        hAxis: {
+          title: 'Total Orders',
+          minValue: 0,
+        },
+        vAxis: {
+          title: 'Time(mins)'
+        }
+      };
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+      
+      myFunction();
+      var nyX = 8175000;
+      var nyY = 8008000;
+      function myFunction() {
+            setTimeout(function(){
+                //alert("Hello");
+                    data = google.visualization.arrayToDataTable([
+            ['Time(mins)', '2010 Population'],
+            ['1-5', nyX],
+            ['6-10', 3792000],
+            ['11-15', 2695000]
+            
+          ]);
+          chart.draw(data, options);
+          nyX += 1000000;
+          nyY += 1000;
+                myFunction();
+            }, 3000);
+        }
+    }
+  </script>
+    </body>
+    </html>
