@@ -17,13 +17,39 @@ $conn  = db_connect();
 
 //echo "connected";
 //echo "connected";
+if(isset($_REQUEST['start'])){
+	$start_date = $_REQUEST['start'];
+$end_date = $_REQUEST['end'];
 $sql = "SELECT FLOOR((TIMESTAMPDIFF(MINUTE,g.timestamp,CONVERT_TZ( ol.timestamp , 
    	@@session.time_zone ,'+05:30' ))-1)/5)+1 as Category,COUNT(1) as Cont
 
-FROM order_details od,grider_requests g,order_log ol where g.request_id=od.request_id and od.order_id=ol.order_id and ol.status='4' and TIMESTAMPDIFF(MINUTE,g.timestamp,CONVERT_TZ( ol.timestamp , @@session.time_zone ,'+05:30' ))<=120 and TIMESTAMPDIFF(MINUTE,g.timestamp,CONVERT_TZ( ol.timestamp , @@session.time_zone ,'+05:30' ))>0
+FROM order_details od,grider_requests g,order_log ol where (date(g.pickup_time) 
+	between '$start_date' and '$end_date') and g.request_id=od.request_id and od.order_id=ol.order_id and ol.status='4' 
+and TIMESTAMPDIFF(MINUTE,g.timestamp,CONVERT_TZ( ol.timestamp , @@session.time_zone ,'+05:30' ))<=120 and TIMESTAMPDIFF(MINUTE,g.timestamp,CONVERT_TZ( ol.timestamp , @@session.time_zone ,'+05:30' ))>0
 
 
 GROUP BY Category";
+}else{
+
+	$date = date('Y-m-d');
+	$date = explode("-", $date);
+
+	$start_date =  implode("-", array($date[0],$date[1],"01") );;
+
+	$end_date =  implode("-", array($date[0],$date[1],"31") );
+
+$sql = "SELECT FLOOR((TIMESTAMPDIFF(MINUTE,g.timestamp,CONVERT_TZ( ol.timestamp , 
+   	@@session.time_zone ,'+05:30' ))-1)/5)+1 as Category,COUNT(1) as Cont
+
+FROM order_details od,grider_requests g,order_log ol where (date(g.pickup_time) 
+	between '$start_date' and '$end_date') and g.request_id=od.request_id and od.order_id=ol.order_id and ol.status='4' 
+and TIMESTAMPDIFF(MINUTE,g.timestamp,CONVERT_TZ( ol.timestamp , @@session.time_zone ,'+05:30' ))<=120 and TIMESTAMPDIFF(MINUTE,g.timestamp,CONVERT_TZ( ol.timestamp , @@session.time_zone ,'+05:30' ))>0
+
+
+GROUP BY Category";	
+}
+
+//echo $sql;
 $my_arr = array();
 $sum = 0;
 if($result = mysql_query($sql,$conn)){
