@@ -49,6 +49,12 @@ and TIMESTAMPDIFF(MINUTE,g.timestamp,CONVERT_TZ( ol.timestamp , @@session.time_z
 GROUP BY Category";	
 }
 
+$nil_arr = array();
+
+for ($i=1; $i <=21 ; $i++) { 
+	$nil_arr[$i] = 0;
+}
+
 //echo $sql;
 $my_arr = array();
 $sum = 0;
@@ -56,6 +62,9 @@ if($result = mysql_query($sql,$conn)){
 	while($row = mysql_fetch_array($result)){
 		//echo "<pre>";
 		$my_arr[$row['Category']] = $row['Cont'];
+		if(array_key_exists($row['Category'], $nil_arr)){
+			$nil_arr[$row['Category']] = $row['Cont'];
+		}
 		$sum += $row['Cont'];
 		//echo "</pre>";
 	}
@@ -65,10 +74,15 @@ if($result = mysql_query($sql,$conn)){
 
 
 $new_arr = array();
-foreach ($my_arr as $key => $value) {
-	$new_arr[$key] = ($value/$sum)*100;
+foreach ($nil_arr as $key => $value) {
+	$nil_arr[$key] = ($value/$sum)*100;
 }
+$my_arr = array();
 
-echo json_encode($new_arr);
-
+foreach ($nil_arr as $key => $value) {
+	$new_key = ($key*5)."-".($key*5+4);
+	$my_arr[$new_key] = $value;
+}
+//echo json_encode($new_arr);
+echo json_encode($nil_arr);
 ?>

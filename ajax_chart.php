@@ -114,10 +114,10 @@ function drawRightY(y) {
           //var result = result;
           drawRightY(myData);
        // graph(result);
-       //my_ajax(start1,end);
+       my_ajax(start1,end);
       }
       catch(err) {
-         //my_ajax(start,end);
+         my_ajax(start,end);
       }
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) { 
