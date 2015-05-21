@@ -63,9 +63,11 @@ if($result = mysql_query($sql,$conn)){
 		//echo "<pre>";
 		$my_arr[$row['Category']] = $row['Cont'];
 		if(array_key_exists($row['Category'], $nil_arr)){
-			$nil_arr[$row['Category']] = $row['Cont'];
+			//$random = rand(0, 25);
+			$random = rand(0, 0);
+			$nil_arr[$row['Category']] = $row['Cont'] + $random ;
 		}
-		$sum += $row['Cont'];
+		$sum += ($row['Cont'] + $random);
 		//echo "</pre>";
 	}
 }else{
@@ -80,9 +82,9 @@ foreach ($nil_arr as $key => $value) {
 $my_arr = array();
 
 foreach ($nil_arr as $key => $value) {
-	$new_key = ($key*5)."-".($key*5+4);
+	$new_key = ($key*5);//."-".($key*5+4);
 	$my_arr[$new_key] = $value;
 }
 //echo json_encode($new_arr);
-echo json_encode($nil_arr);
+echo json_encode($my_arr);
 ?>

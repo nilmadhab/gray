@@ -63,6 +63,53 @@ function drawRightY(y) {
       };
       var material = new google.charts.Bar(document.getElementById('chart_div'));
       material.draw(data, options);
+
+       myFunction();
+     // var nyX = 8175000;
+      //var nyY = 8008000;
+
+          function myFunction() {
+            setTimeout(function(){
+                //alert("Hello");
+                    /*data = google.visualization.arrayToDataTable([
+            ['Time(mins)', '2010 Population'],
+            ['1-5', nyX],
+            ['6-10', 3792000],
+            ['11-15', 2695000]
+            
+          ]);
+          material.draw(data, options);
+          nyX += 1000000;
+          nyY += 1000;*/
+          
+
+              var today = new Date();
+
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+
+     
+      var dd = today.getDate();
+      var from = dd -15;
+      if(dd<10) {
+          dd='0'+dd
+      } 
+      if(mm<10) {
+          mm='0'+mm;
+      } 
+start1 = yyyy+'-'+mm+'-'+from;
+    end  = yyyy+'-'+mm+'-'+dd;
+     // today = mm+'/'+dd+'/'+yyyy;
+
+        
+
+        data = google.visualization.arrayToDataTable(my_ajax(start1,end));
+
+
+          
+                myFunction();
+            }, 3000);
+        }
     }
 
        function graph(x){
@@ -93,7 +140,7 @@ function drawRightY(y) {
       $.ajax({
         url: "dynamic.php",
          beforeSend: function() {
-        $('#chart_div').html("<img src='ajax-loader.gif' />");
+        //$('#chart_div').html("<img src='ajax-loader.gif' />");
         }, 
         type: "GET",
         data: "start="+ start1 +"& end="+end,
@@ -114,10 +161,11 @@ function drawRightY(y) {
           //var result = result;
           drawRightY(myData);
        // graph(result);
-       my_ajax(start1,end);
+       //my_ajax(start1,end);
+       return myData;
       }
       catch(err) {
-         my_ajax(start,end);
+         //my_ajax(start,end);
       }
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) { 
@@ -130,29 +178,7 @@ function drawRightY(y) {
    </script>
    <div class="row">
    <div class="container">
-    <form class="form-inline" id="nil_form" onsubmit="event.preventDefault()" action="" method="get">
-  <div class="form-group">
-    <label for="exampleInputName2">start date </label>
-    <input type="date" id="start" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail2">end date </label>
-    <input type="date"  id="end" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-  </div>
-  <button type="submit" onclick="send()" class="btn btn-info">Generate</button>
 
-  <script type="text/javascript">
-  function send(){
-    var start = $("#start").val();//("name");
-    var end = $("#end").val();//("end");
-
-    console.log(start);
-    console.log(end);
-
-    my_ajax(start,end);
-  }
-  </script>
-</form>
 </div>
    </div>
 <div class="row">
@@ -163,7 +189,7 @@ function drawRightY(y) {
    
 
    <script type="text/javascript">
-
+    $('#chart_div').html("<img src='ajax-loader.gif' />");
    </script>
 </body>
 </html>
