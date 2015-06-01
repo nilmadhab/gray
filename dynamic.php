@@ -63,8 +63,8 @@ if($result = mysql_query($sql,$conn)){
 		//echo "<pre>";
 		$my_arr[$row['Category']] = $row['Cont'];
 		if(array_key_exists($row['Category'], $nil_arr)){
-			//$random = rand(0, 25);
-			$random = rand(0, 0);
+			$random = rand(0, 25);
+			//$random = rand(0, 0);
 			$nil_arr[$row['Category']] = $row['Cont'] + $random ;
 		}
 		$sum += ($row['Cont'] + $random);

@@ -26,7 +26,8 @@
       if(mm<10) {
           mm='0'+mm;
       } 
-start1 = yyyy+'-'+mm+'-01';
+      var mm1 = mm-1;
+start1 = yyyy+'-'+mm1+'-01';
     end  = yyyy+'-'+mm+'-31';
      // today = mm+'/'+dd+'/'+yyyy;
 
@@ -97,7 +98,8 @@ function drawRightY(y) {
       if(mm<10) {
           mm='0'+mm;
       } 
-start1 = yyyy+'-'+mm+'-'+from;
+      var mm2 = mm-10;
+start1 = yyyy+'-'+mm2+'-'+from;
     end  = yyyy+'-'+mm+'-'+dd;
      // today = mm+'/'+dd+'/'+yyyy;
 
@@ -182,7 +184,7 @@ start1 = yyyy+'-'+mm+'-'+from;
 </div>
    </div>
 <div class="row">
-    <div id="chart_div" style="height:400px; width: 800px; margin:0 auto; margin-top:200px"><div>
+    <div id="chart_div" style="height:400px; width: 80%; margin:0 auto; margin-top:200px"></div>
    </div>
 
 
